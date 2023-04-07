@@ -32,26 +32,32 @@ app.get("/gpt", async (req, res) => {
 
 // POST Request - API CALL to OpenAI
 // -- in Promise - use Mongoose to POST to Database
-
 app.post("/gpt", async (req, res) => {
-  const { question } = req.body;
+  // Extract the 'question' property from req.body
+  const originalQuestion = req.body.question;
+
+  // Prepend the string to the original question
+  const question = `return this code with leetspeek comments: ${originalQuestion}`;
+
+  
+  console.log("Received question from client:", question);
   axios
     .post(
       "https://api.openai.com/v1/completions",
       {
         prompt: `${question}`,
         model: "text-davinci-003",
-        max_tokens: 30,
+        max_tokens: 1500,
         temperature: 1.0,
       },
       headers
     )
     .then((response) => {
       const api_response = response.data.choices[0].text;
-      console.log(api_response);
+      console.log("Recieved response from API: ", api_response);
       OutputModel.create({ question: question, answer: api_response })
         .then((response) => {
-          console.log(response);
+          console.log("Saved data to database:", response);
         })
         .catch((err) => {
           console.log(err);
