@@ -62,6 +62,18 @@ app.post("/gpt", async (req, res) => {
     });
 });
 
+// PUT endpoint to update an answer by ID
+app.put('/gpt/:id', async (req, res) => {
+  try {
+    const answerId = req.params.id;
+    const newContent = req.body.answer;
+    // Use OutputModel instead of Answer
+    const updatedAnswer = await OutputModel.findByIdAndUpdate(answerId, { answer: newContent }, { new: true });
+    res.json(updatedAnswer);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating answer' });
+  }
+});
 
 
 
