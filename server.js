@@ -75,6 +75,21 @@ app.put('/gpt/:id', async (req, res) => {
   }
 });
 
+// DELETE endpoint to delete an answer by ID
+app.delete('/gpt/:id', async (req, res) => {
+  try {
+    const answerId = req.params.id; // Get the ID from the request parameters
+    // Use OutputModel's findByIdAndDelete method to delete the document by ID
+    const deletedAnswer = await OutputModel.findByIdAndDelete(answerId);
+    if (deletedAnswer) {
+      res.json({ message: 'Answer deleted successfully', deletedAnswer });
+    } else {
+      res.status(404).json({ message: 'Answer not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting answer' });
+  }
+});
 
 
 
