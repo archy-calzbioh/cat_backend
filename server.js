@@ -37,7 +37,21 @@ app.post("/gpt", async (req, res) => {
   const originalQuestion = req.body.question;
 
   // Prepend the string to the original question
-  const question = `edit this code to have humorous "leetspeak" commments but do not change the original code. make sure your inserted comments are properly formatted as comments so it does not interfere with the functionality of the code: ${originalQuestion}`;
+  const question = `As a programmer who loves to use leetspeak slang, I often write comments in my code using leetspeak. Given a piece of code, I want you to add comments to it using leetspeak slang. Here's an example:
+
+Input: 
+function add(a, b) {
+return a + b;
+}
+
+Output:
+// th1s funct10n 4dds tw0 numb3rs t0g3th3r
+function add(a, b) {
+// r3turn th3 sum 0f 4 and b
+return a + b;
+}
+
+Now, please add leetspeak comments to the following code: ${originalQuestion}`;
 
   
   console.log("Received question from client:", question);
@@ -48,7 +62,7 @@ app.post("/gpt", async (req, res) => {
         prompt: `${question}`,
         model: "text-davinci-003",
         max_tokens: 1500,
-        temperature: 1.0,
+        temperature: 0.1,
         // format: "markdown"
         format: "text"
       },
