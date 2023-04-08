@@ -37,7 +37,7 @@ app.post("/gpt", async (req, res) => {
   const originalQuestion = req.body.question;
 
   // Prepend the string to the original question
-  const question = `return this code with leetspeek comments: ${originalQuestion}`;
+  const question = `edit this code to have humorous "leetspeak" commments but do not change the original code. make sure your inserted comments are properly formatted as comments so it does not interfere with the functionality of the code: ${originalQuestion}`;
 
   
   console.log("Received question from client:", question);
@@ -49,6 +49,8 @@ app.post("/gpt", async (req, res) => {
         model: "text-davinci-003",
         max_tokens: 1500,
         temperature: 1.0,
+        // format: "markdown"
+        format: "text"
       },
       headers
     )
