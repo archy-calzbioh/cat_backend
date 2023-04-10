@@ -129,13 +129,13 @@ Now, please add leetspeak comments to the following code: ${originalQuestion}`;
     .then((response) => {
       const api_response = response.data.choices[0].text;
       console.log("Recieved response from API: ", api_response);
-      OutputModel.create({ question: question, answer: api_response })
-        .then((response) => {
-          console.log("Saved data to database:", response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+     OutputModel.create({ question: originalQuestion, answer: api_response })
+       .then((response) => {
+         console.log("Saved data to database:", response);
+       })
+       .catch((err) => {
+         console.log(err);
+       });
     })
     .catch((err) => {
       console.log(err);
