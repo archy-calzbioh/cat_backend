@@ -37,6 +37,9 @@ app.post("/gpt", async (req, res) => {
   const originalQuestion = req.body.question;
 
   // Prepend the string to the original question
+  const imageUrl = req.body.imageUrl; // Extract the imageUrl
+
+  // Prepend the string to the original question
   const question = `As a programmer who loves to use leetspeak slang, I often write comments in my code using leetspeak. Given a piece of code, I want you to add comments to it using leetspeak slang. Make sure each comment is placed on a separate line above the relevant code, and the comments are indented to match the code they are commenting on. Here's an example:
 
 Input:
@@ -111,7 +114,6 @@ Output:
 
 Now, please add leetspeak comments to the following code: ${originalQuestion}`;
 
-  
   console.log("Received question from client:", question);
   axios
     .post(
@@ -122,20 +124,25 @@ Now, please add leetspeak comments to the following code: ${originalQuestion}`;
         max_tokens: 1500,
         temperature: 0.1,
         // format: "markdown"
-        format: "text"
+        format: "text",
       },
       headers
     )
     .then((response) => {
       const api_response = response.data.choices[0].text;
       console.log("Recieved response from API: ", api_response);
-     OutputModel.create({ question: originalQuestion, answer: api_response })
-       .then((response) => {
-         console.log("Saved data to database:", response);
-       })
-       .catch((err) => {
-         console.log(err);
-       });
+      // Include the imageUrl field when creating a new document in the OutputModel collection
+      OutputModel.create({
+        question: originalQuestion,
+        answer: api_response,
+        imageUrl: imageUrl,
+      })
+        .then((response) => {
+          console.log("Saved data to database:", response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
