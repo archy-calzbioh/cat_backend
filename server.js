@@ -225,10 +225,5 @@ mongoose.connection.once("open", () => {
 });
 
 app.listen(PORT, () => {
-  console.log("listening...");
-});
-
-
-app.listen(PORT, () => {
-  console.log("listening on port", PORT);
+  console.log(`Server listening on port ${PORT}`);
 });
