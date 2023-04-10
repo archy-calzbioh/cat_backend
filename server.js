@@ -173,6 +173,39 @@ app.delete('/gpt/:id', async (req, res) => {
 
 
 
+// Define a route to handle image generation requests
+app.post('/generate-image', async (req, res) => {
+  try {
+
+    // Define the OpenAI API endpoint and API key
+    const openaiUrl = 'https://api.openai.com/v1/images/generations';
+
+    // Make a POST request to the OpenAI API
+    const openaiResponse = await axios.post(
+      openaiUrl,
+      {
+        prompt: "A cat hacking a computer.",
+        n: 1,
+        size: "256x256",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+      }
+    );
+
+    // Send the response from the OpenAI API back to the client
+    res.json(openaiResponse.data);
+  } catch (error) {
+    // Handle errors and send an error response to the client
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while generating the image.' });
+  }
+});
+
+
 // MONGOOSE
 
 const mongoose = require("mongoose");
