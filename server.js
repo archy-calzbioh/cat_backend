@@ -217,7 +217,8 @@ app.post('/generate-image', async (req, res) => {
 
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/chatgpt");
+// Use the MONGODB_URI environment variable for the MongoDB connection URL
+mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.once("open", () => {
   console.log("connected to mongoDB....");
