@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
-const PORT = 3080;
+const PORT = process.env.PORT || 3080;
 const app = express();
 
 
@@ -226,4 +226,9 @@ mongoose.connection.once("open", () => {
 
 app.listen(PORT, () => {
   console.log("listening...");
+});
+
+
+app.listen(PORT, () => {
+  console.log("listening on port", PORT);
 });
