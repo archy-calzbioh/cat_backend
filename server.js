@@ -3,6 +3,12 @@ const cors = require("cors");
 const axios = require("axios");
 const PORT = process.env.PORT || 3080;
 const app = express();
+const { OpenAI } = require("openai-streams");
+const fs = require("fs");
+
+// Read the content of the prompt.txt file
+const promptText = fs.readFileSync("prompt.txt", "utf8");
+
 
 
 // Configure CORS to allow requests from multiple specified origins
@@ -49,79 +55,7 @@ app.post("/gpt", async (req, res) => {
   const imageUrl = req.body.imageUrl; // Extract the imageUrl
 
   // Prepend the string to the original question
-  const question = `As a programmer who loves to use leetspeak slang, I often write comments in my code using leetspeak. Given a piece of code, I want you to add comments to it using leetspeak slang. Make sure each comment is placed on a separate line above the relevant code, and the comments are indented to match the code they are commenting on. Here's an example:
-
-Input:
-:
-
-  console.log("Received question from client:", question);
-  axios
-    .post(
-      "https://api.openai.com/v1/completions",
-      {
-        prompt: ,
-        model: "text-davinci-003",
-        max_tokens: 1500,
-        temperature: 0.1,
-        // format: "markdown"
-        format: "text"
-      },
-      headers
-    )
-    .then((response) => {
-      const api_response = response.data.choices[0].text;
-      console.log("Recieved response from API: ", api_response);
-      OutputModel.create({ question: question, answer: api_response })
-        .then((response) => {
-          console.log("Saved data to database:", response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-Output:
-  // c0ns0l3 l0g th3 qu3st10n r3c31v3d fr0m cl13nt
-  console.log("Received question from client:", question);
-  // m4k3 4 p0st r3qu3st t0 0p3n41 4p1
-  axios
-    .post(
-      "https://api.openai.com/v1/completions",
-      {
-        prompt: ,
-        model: "text-davinci-003",
-        max_tokens: 1500,
-        temperature: 0.1,
-        // f0rm4t: "m4rkdown"
-        format: "text"
-      },
-      headers
-    )
-    .then((response) => {
-      // 3xtr4ct th3 4p1 r3sp0ns3
-      const api_response = response.data.choices[0].text;
-      // c0ns0l3 l0g th3 r3sp0ns3 fr0m 4p1
-      console.log("Recieved response from API: ", api_response);
-      // cr34t3 4 n3w 3ntry 1n th3 0utputM0d3l c0ll3ct10n
-      OutputModel.create({ question: question, answer: api_response })
-        .then((response) => {
-          // c0ns0l3 l0g th3 d4t4 s4v3d t0 d4t4b4s3
-          console.log("Saved data to database:", response);
-        })
-        .catch((err) => {
-          // l0g 4ny 3rr0rs
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-Now, please add leetspeak comments to the following code: ${originalQuestion}`;
+  const question = `${promptText}${originalQuestion}`;
 
   console.log("Received question from client:", question);
   axios
