@@ -5,6 +5,15 @@ const PORT = process.env.PORT || 3080;
 const app = express();
 
 
+// Configure CORS to allow requests from the specified origin
+const corsOptions = {
+  origin: 'https://cat-frontend.herokuapp.com',
+  optionsSuccessStatus: 200
+};
+
+// Apply the CORS middleware with the specified options
+app.use(cors(corsOptions));
+
 // using dotenv package - npm install dotenv and then use .env file created
 require("dotenv").config();
 
