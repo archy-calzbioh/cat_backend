@@ -23,7 +23,7 @@ const OutputModel = require("./models/output");
 // Middleware - json/urlencoded/cors
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+
 
 // API Key from the .env file
 // --- you will need to replace that one with your OWN!!! - Nick will be canceling this one after the lesson
