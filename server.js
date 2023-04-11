@@ -5,9 +5,9 @@ const PORT = process.env.PORT || 3080;
 const app = express();
 
 
-// Configure CORS to allow requests from the specified origin
+// Configure CORS to allow requests from multiple specified origins
 const corsOptions = {
-  origin: 'https://cat-frontend.herokuapp.com',
+  origin: ['https://cat-frontend.herokuapp.com', 'http://localhost:3000'],
   optionsSuccessStatus: 200
 };
 
