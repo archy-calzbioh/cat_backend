@@ -3,7 +3,7 @@ const cors = require("cors");
 const axios = require("axios");
 const PORT = process.env.PORT || 3080;
 const app = express();
-const { OpenAI } = require("openai-streams");
+// const { OpenAI } = require("openai-streams");
 const fs = require("fs");
 
 // Read the content of the prompt.txt file
